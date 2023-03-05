@@ -1,9 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import AboutAnimation from './src/Screens/AboutAnimation/AboutAnimation';
+import GestureHandler from './src/Screens/GestureHandler/GestureHandler';
 
 const App = () => {
-  return <AboutAnimation />;
+  return <GestureHandler />;
 };
 
 export default App;
