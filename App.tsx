@@ -1,9 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import GestureHandler from './src/Screens/GestureHandler/GestureHandler';
+import InterPolateScrolView from './src/Screens/InterpolateScrolview/InterPolateScrolView';
 
 const App = () => {
-  return <GestureHandler />;
+  return <InterPolateScrolView />;
 };
 
 export default App;
