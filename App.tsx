@@ -1,9 +1,14 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import InterPolateScrolView from './src/Screens/InterpolateScrolview/InterPolateScrolView';
+import RedialMenu from './src/Screens/RedialMenu/RedialMenu';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
-  return <InterPolateScrolView />;
+  return (
+    <GestureHandlerRootView style={{flex: 1}}>
+      <RedialMenu />
+    </GestureHandlerRootView>
+  );
 };
 
 export default App;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {
+  GestureHandlerRootView,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
@@ -59,6 +60,8 @@ export default function GestureHandler() {
     };
   });
   return (
+  
+
     <View style={styles.mainContainer}>
       {
         //   ----------------panGestureEvent is use for move the view and give you the position of the view -----------
