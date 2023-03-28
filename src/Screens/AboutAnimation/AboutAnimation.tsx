@@ -27,7 +27,7 @@ const AboutAnimation = () => {
 //   withTiming:- The target value at which the spring conclude .  --------
 
   useEffect(() => {
-    progress.value = withRepeat(withSpring(0.5), -1, true);
+    progress.value = withRepeat(withSpring(0.5), -1,);
     scale.value = withRepeat(withSpring(1), -1, true)
   }, []);
 

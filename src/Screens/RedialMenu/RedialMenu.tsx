@@ -6,12 +6,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
+  withRepeat,
+  withSequence,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import {
   GestureHandlerRootView,
@@ -23,14 +27,15 @@ const {height, width} = Dimensions.get('window');
 const SIZE = 90;
 type propType = {
   index: number;
+  scale:number
 };
-const RenderCircle: FC<propType> = ({index}) => {
+const RenderCircle: FC<propType> = ({index,scale}) => {
   const customStyle = (index: number) => {
     switch (index) {
       case 0:
         return {
           top: height / 6.5,
-        right:"32%",
+          right: '32%',
           height: height / 9.5 + 20,
           width: height / 9.5 + 20,
         };
@@ -38,7 +43,7 @@ const RenderCircle: FC<propType> = ({index}) => {
       case 1:
         return {
           top: 0,
-          right:"32%",
+          right: '32%',
           height: height / 9.5 + 20,
           width: height / 9.5 + 20,
         };
@@ -70,7 +75,7 @@ const RenderCircle: FC<propType> = ({index}) => {
       case 5:
         return {
           bottom: 0,
-          right:"32%",
+          right: '32%',
           height: height / 9.5 + 20,
           width: height / 9.5 + 20,
         };
@@ -99,10 +104,10 @@ const RenderCircle: FC<propType> = ({index}) => {
   };
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
-
-  const rStyle = useAnimatedStyle(() => ({
-    transform: [{translateX: translateX.value}, {translateY: translateY.value}],
-  }));
+  const Scale = useSharedValue(0);
+  useEffect(() => {
+    Scale.value = withDelay(( index+1)*200, withTiming(1));
+  }, []);
 
   const panGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -133,9 +138,11 @@ const RenderCircle: FC<propType> = ({index}) => {
       transform: [
         {translateX: translateX.value},
         {translateY: translateY.value},
+        {scale: Scale.value},
       ],
     };
   });
+
   return (
     <PanGestureHandler onGestureEvent={panGestureEvent}>
       <Animated.View
