@@ -8,13 +8,14 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "clean":"cd android && ./gradlew clean"
+    "clean": "cd android && ./gradlew clean"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.71.3",
     "react-native-gesture-handler": "^2.9.0",
-    "react-native-reanimated": "^3.0.1"
+    "react-native-reanimated": "^3.0.1",
+    "react-native-redash": "^18.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

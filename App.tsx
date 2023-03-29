@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import RedialMenu from './src/Screens/ImageRotationAnimation/ImageRotation';
+import RedialMenu from './src/Screens/LikeDislikeSwip/LikeDislikeSwip';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
