@@ -20,6 +20,7 @@ const CardCom = ({ item = {}, index,onSwipeUp=()=>{},heightIn,}) => {
         onPanResponderMove: (e, gestureState) => {
             swipeGesture.setValue({x: heightIn ? 0 : gestureState.dx, y: 0});
         },
+        onPanResponderGrant:(evt, gestureState) => false,
         onPanResponderRelease: (evt, gestureState) => {
             if (gestureState.dx > side) {
                 onSwipeUp(false, item, index);
