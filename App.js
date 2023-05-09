@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import MenuAnimation from './src/Screens/MenuAnimation/MenuAnimation'
+import MenuAnimation from './src/Screens/DriverInfo/DriverInfo'
 
 const App = () => {
   return (
@@ -10,3 +10,6 @@ const App = () => {
 }
 
 export default App
+
+
+

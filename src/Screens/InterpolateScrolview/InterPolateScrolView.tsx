@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
-import {Page} from './Page';
+import { Page } from './Page';
 
 const InterPolateScrolView = () => {
     const data = ['hi', '2', '3', '4'];

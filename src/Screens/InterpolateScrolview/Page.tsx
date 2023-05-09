@@ -55,7 +55,7 @@ const Page: FC<pageProps> = ({ title, index, translateX }) => {
     </View>
   );
 };
-export {Page};
+export  default Page;
 const styles = StyleSheet.create({
   pageContainer: {
     height,
