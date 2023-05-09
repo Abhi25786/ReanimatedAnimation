@@ -52,6 +52,7 @@ const CardCom = ({ item = {}, index,onSwipeUp=()=>{},heightIn,}) => {
       });
   return (
       <Animated.View
+          pointerEvents={heightIn?'box-none':'box-only'}
           style={styles.cardView(heightIn, swipeGesture, rotate)}
           {...panResponder.panHandlers}
       >
