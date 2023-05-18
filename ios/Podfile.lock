@@ -415,7 +415,7 @@ PODS:
     - React-perflogger (= 0.71.3)
   - RNGestureHandler (2.9.0):
     - React-Core
-  - RNReanimated (3.0.1):
+  - RNReanimated (3.1.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -650,11 +650,11 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7bf0dafc7b727d93c8cb94eb00a9d3753c446c3e
   ReactCommon: 6f65ea5b7d84deb9e386f670dd11ce499ded7b40
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
-  RNReanimated: 42295301c43f974340a510ba18d5a2031c191c30
+  RNReanimated: b1220a0e5168745283ff5d53bfc7d2144b2cee1b
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 5ed1699acbba8863755998a4245daa200ff3817b
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 9ba3ecd6f789d3b4cc5aaa4271fd29aadb2c9bcc
+PODFILE CHECKSUM: ba583682bd133381eb2fb56a1eabb57f1b22d4f5
 
 COCOAPODS: 1.11.3
