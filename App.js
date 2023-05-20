@@ -1,8 +1,8 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 import IntoSliderCom from './src/Screens/IntroSlider/IntoSliderCom';
 import Animated from 'react-native-reanimated';
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const App = () => {
   const [data, setData] = useState([
@@ -27,40 +27,39 @@ const App = () => {
       text: 'good',
     },
     
+
   ]);
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <IntoSliderCom
         data={data}
         rnederImage={item => {
           return (
             <Animated.Image
-              source={{uri: item?.uri}}
-              style={[{height: height / 1.7, width: width}]}
+              source={{ uri: item?.uri }}
+              style={[{ height: height / 1.7, width: width }]}
             />
           );
         }}
         pagination={true}
         activeDotWidth={30}
         inactiveDotWidth={10}
-        // autoScroll={true}
+        autoScroll={true}
         renderTextView={item => {
           return (
             <View
               style={{
-                height: height / 4,
-                backgroundColor: 'red',
-                width:width,
+                flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-              
+
               }}>
               <Text>{item?.text}</Text>
             </View>
           );
         }}
         mainContainerStyle={{}}
-      imageIntrpolateScale={[0.5,1,0.5]}
+        imageIntrpolateScale={[0.5, 1, 0.5]}
       />
     </View>
   );

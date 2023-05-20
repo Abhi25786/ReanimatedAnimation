@@ -15,7 +15,11 @@ import Animated, {
 import CradView from './CradView';
 import Pagination from './Pagination';
 import AnimtedText from './AnimtedText';
-import {scaleAnimation, translateRightToLeft} from './AnimatedFunctions';
+import {
+  scaleAnimation,
+  translateRightToLeft,
+  widthAnimation,
+} from './AnimatedFunctions';
 const {height, width} = Dimensions.get('window');
 type IntoSliderProps = {
   data: Array<object>;
@@ -59,7 +63,7 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [sliderState]);
+  }, [sliderState,autoScroll]);
 
   const setSliderPage = (event: any) => {
     const {x} = event.contentOffset;
@@ -80,38 +84,56 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
 
   return (
     <View style={{...mainContainerStyle, flex: 1}}>
-      <View style={{height: height / 1.7}}>
-        <Animated.ScrollView
-          horizontal
-          ref={scrollViewRef}
-          onScroll={onScrolHandle}
-          scrollEventThrottle={16}
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled>
-          {data.map((item, index) => {
-            const inputRange = [
-              (index - 1) * width,
-              index * width,
-              (index + 1) * width,
-            ];
-            const outputRange = imageIntrpolateScale;
-            return (
+      <Animated.ScrollView
+        horizontal
+        ref={scrollViewRef}
+        onScroll={onScrolHandle}
+        scrollEventThrottle={16}
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled>
+        {data?.map((item, index) => {
+          const inputRange = [
+            (index - 1) * width,
+            index * width,
+            (index + 1) * width,
+          ];
+          const outputRange = imageIntrpolateScale;
+          const textOutputRange = [width, 0, -width];
+
+          return (
+            <View style={{flex: 1}} key={index.toString()}>
               <Animated.View
-                style={scaleAnimation(translateX, inputRange, outputRange)}>
+                style={[
+                  scaleAnimation(translateX, inputRange, outputRange),
+                  {flex: 0.65},
+                ]}>
                 {rnederImage(item, index)}
               </Animated.View>
-            );
-          })}
-        </Animated.ScrollView>
-      </View>
+
+              <Animated.View
+                style={[renderTextViewStyle,
+                  {
+                    flex: 0.25,
+                  },
+                  translateRightToLeft(translateX, inputRange, textOutputRange),
+                ]}>
+                {renderTextView(item, index)}
+              </Animated.View>
+            </View>
+          );
+        })}
+      </Animated.ScrollView>
       {!!pagination ? (
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 20,
             justifyContent: 'center',
+            position: 'absolute',
+            bottom: height / 2.85,
+            right: 0,
+            left: 0,
           }}>
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <Pagination
               index={index}
               key={index.toString()}
@@ -125,34 +147,6 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
           ))}
         </View>
       ) : null}
-
-      <View
-        style={{
-          ...renderTextViewStyle,
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: height / 4.5,
-          marginTop: 20,
-          overflow: 'hidden',
-        }}>
-        {data.map((item, index) => {
-          const inputRange = [
-            (index - 1) * width,
-            index * width,
-            (index + 1) * width,
-          ];
-          const outputRange = [width, 0, -width];
-          return (
-            <Animated.View
-              style={[
-                {position: 'absolute'},
-                translateRightToLeft(translateX, inputRange, outputRange),
-              ]}>
-              {renderTextView(item, index)}
-            </Animated.View>
-          );
-        })}
-      </View>
 
       <TouchableOpacity
         style={{
