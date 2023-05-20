@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Alert, Dimensions, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import IntoSliderCom from './src/Screens/IntroSlider/IntoSliderCom';
 import Animated from 'react-native-reanimated';
@@ -26,7 +26,6 @@ const App = () => {
       uri: 'https://images.pexels.com/photos/1420440/pexels-photo-1420440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       text: 'good',
     },
-    
 
   ]);
   return (
@@ -44,6 +43,8 @@ const App = () => {
         pagination={true}
         activeDotWidth={30}
         inactiveDotWidth={10}
+        inactiveDotColor={'gray'}
+        activeDotColor={'black'}
         autoScroll={true}
         renderTextView={item => {
           return (
@@ -60,6 +61,8 @@ const App = () => {
         }}
         mainContainerStyle={{}}
         imageIntrpolateScale={[0.5, 1, 0.5]}
+        onPressStart={() => alert('dwaesd')}
+        scrollIndecatorHeight={6}
       />
     </View>
   );
@@ -68,3 +71,4 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({});
+

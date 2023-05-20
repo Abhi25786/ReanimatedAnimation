@@ -35,6 +35,7 @@ type IntoSliderProps = {
   mainContainerStyle: any;
   autoScroll: boolean;
   imageIntrpolateScale: Array<number>;
+  scrollIndecatorHeight:number
 };
 const IntoSliderCom: FC<IntoSliderProps> = ({
   data,
@@ -50,8 +51,12 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
   mainContainerStyle,
   autoScroll = false,
   imageIntrpolateScale = [0.9, 1, 0.9],
+  scrollIndecatorHeight
 }) => {
   const [sliderState, setSliderState] = useState(1);
+  const scrollElementHeightPercent = 10;
+  const Size = 100;
+  const [contentOffset, setContentOffset] = useState(0);
   const translateX = useSharedValue(0);
   const scrollViewRef = useRef();
   console.log(sliderState, 'sliderStatesliderState');
@@ -63,7 +68,7 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [sliderState,autoScroll]);
+  }, [sliderState, autoScroll]);
 
   const setSliderPage = (event: any) => {
     const {x} = event.contentOffset;
@@ -75,6 +80,11 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
   const onScrolHandle = useAnimatedScrollHandler(event => {
     'worklet';
     translateX.value = event.contentOffset.x;
+    const scrollView =
+      (event.contentOffset.x /
+        (event.contentSize.width - event.layoutMeasurement.width)) *
+      (100 - scrollElementHeightPercent);
+    runOnJS(setContentOffset)(scrollView);
     runOnJS(setSliderPage)(event);
   });
   const onPressNext = async () => {
@@ -111,7 +121,8 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
               </Animated.View>
 
               <Animated.View
-                style={[renderTextViewStyle,
+                style={[
+                  renderTextViewStyle,
                   {
                     flex: 0.25,
                   },
@@ -124,28 +135,18 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
         })}
       </Animated.ScrollView>
       {!!pagination ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            position: 'absolute',
-            bottom: height / 2.85,
-            right: 0,
-            left: 0,
-          }}>
-          {data?.map((item, index) => (
-            <Pagination
-              index={index}
-              key={index.toString()}
-              translateX={translateX}
-              cruntIndex={sliderState}
-              inactiveDotWidth={inactiveDotWidth}
-              activeDotWidth={activeDotWidth}
-              activeDotColor={activeDotColor}
-              inactiveDotColor={inactiveDotColor}
-            />
-          ))}
-        </View>
+          <Pagination
+            data={data}
+            translateX={translateX}
+            cruntIndex={sliderState}
+            inactiveDotWidth={inactiveDotWidth}
+            activeDotWidth={activeDotWidth}
+            activeDotColor={activeDotColor}
+            inactiveDotColor={inactiveDotColor}
+            contentOffset={contentOffset}
+          scrollElementHeightPercent={scrollElementHeightPercent}
+          scrollIndecatorHeight={scrollIndecatorHeight}
+          />
       ) : null}
 
       <TouchableOpacity

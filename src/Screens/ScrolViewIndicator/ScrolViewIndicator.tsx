@@ -12,9 +12,10 @@ const ScrolViewIndicator = () => {
       const scrollView =
         (event.contentOffset.x /
           (event.contentSize.width - event.layoutMeasurement.width)) *
-        (100 - scrollElementHeightPercent);
+        (Size - scrollElementHeightPercent);
   
-      setContentOffset(scrollView);
+      // setContentOffset(scrollView);
+    runOnJS(setContentOffset)(scrollView)
     });
 
   return (
