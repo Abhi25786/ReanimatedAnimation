@@ -1,33 +1,67 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import IntoSliderCom from './src/Screens/IntroSlider/IntoSliderCom';
+import Animated from 'react-native-reanimated';
+const {height, width} = Dimensions.get('window');
 
 const App = () => {
   const [data, setData] = useState([
     {
       id: 1,
       uri: 'https://images.pexels.com/photos/235986/pexels-photo-235986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      text:'HI '
+      text: 'HI ',
     },
     {
       id: 2,
       uri: 'https://images.pexels.com/photos/1420440/pexels-photo-1420440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      text:'hello '
+      text: 'hello ',
     },
     {
       id: 3,
       uri: 'https://images.pexels.com/photos/235986/pexels-photo-235986.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      text:'bye '
+      text: 'bye ',
     },
     {
       id: 4,
       uri: 'https://images.pexels.com/photos/1420440/pexels-photo-1420440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      text:'good'
+      text: 'good',
     },
+    
   ]);
   return (
     <View style={{flex: 1}}>
-      <IntoSliderCom data={data} />
+      <IntoSliderCom
+        data={data}
+        rnederImage={item => {
+          return (
+            <Animated.Image
+              source={{uri: item?.uri}}
+              style={[{height: height / 1.7, width: width}]}
+            />
+          );
+        }}
+        pagination={true}
+        activeDotWidth={30}
+        inactiveDotWidth={10}
+        // autoScroll={true}
+        renderTextView={item => {
+          return (
+            <View
+              style={{
+                height: height / 4,
+                backgroundColor: 'red',
+                width:width,
+                alignItems: 'center',
+                justifyContent: 'center',
+              
+              }}>
+              <Text>{item?.text}</Text>
+            </View>
+          );
+        }}
+        mainContainerStyle={{}}
+      imageIntrpolateScale={[0.5,1,0.5]}
+      />
     </View>
   );
 };
