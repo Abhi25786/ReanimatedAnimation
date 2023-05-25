@@ -1,3 +1,4 @@
+import React, {FC, memo, useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -5,21 +6,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {FC, memo, useEffect, useRef, useState} from 'react';
 import Animated, {
+  Easing,
   runOnJS,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useSharedValue,
+  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
-import CradView from './CradView';
+import {scaleAnimation, translateRightToLeft} from './AnimatedFunctions';
 import Pagination from './Pagination';
-import AnimtedText from './AnimtedText';
-import {
-  scaleAnimation,
-  translateRightToLeft,
-  widthAnimation,
-} from './AnimatedFunctions';
 const {height, width} = Dimensions.get('window');
 type IntoSliderProps = {
   data: Array<object>;
@@ -35,7 +32,7 @@ type IntoSliderProps = {
   mainContainerStyle: any;
   autoScroll: boolean;
   imageIntrpolateScale: Array<number>;
-  scrollIndecatorHeight:number
+  scrollIndecatorHeight: number;
 };
 const IntoSliderCom: FC<IntoSliderProps> = ({
   data,
@@ -51,21 +48,24 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
   mainContainerStyle,
   autoScroll = false,
   imageIntrpolateScale = [0.9, 1, 0.9],
-  scrollIndecatorHeight
+  scrollIndecatorHeight,
 }) => {
   const [sliderState, setSliderState] = useState(1);
   const scrollElementHeightPercent = 10;
   const Size = 100;
   const [contentOffset, setContentOffset] = useState(0);
   const translateX = useSharedValue(0);
-  const scrollViewRef = useRef();
+  const scrollViewRef = useAnimatedRef();
   console.log(sliderState, 'sliderStatesliderState');
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (autoScroll && sliderState != data.length) {
         onPressNext();
+        return
       }
+      // scrollViewRef?.current?.scrollTo({x: 0 });
+
     }, 3000);
     return () => clearInterval(interval);
   }, [sliderState, autoScroll]);
@@ -73,13 +73,13 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
   const setSliderPage = (event: any) => {
     const {x} = event.contentOffset;
     const indexOfNextScreen = Math.fround((x + width) / width)?.toFixed(0);
-    if (indexOfNextScreen !== sliderState) {
-      setSliderState(indexOfNextScreen);
+    if (Number(indexOfNextScreen) !== Number(sliderState)) {
+      setSliderState(Number(indexOfNextScreen));
     }
   };
   const onScrolHandle = useAnimatedScrollHandler(event => {
     'worklet';
-    translateX.value = event.contentOffset.x;
+    translateX.value =withSpring( event.contentOffset.x)
     const scrollView =
       (event.contentOffset.x /
         (event.contentSize.width - event.layoutMeasurement.width)) *
@@ -87,9 +87,12 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
     runOnJS(setContentOffset)(scrollView);
     runOnJS(setSliderPage)(event);
   });
+  console.log(sliderState, data.length);
+
   const onPressNext = async () => {
     await setSliderState(sliderState + 1);
-    scrollViewRef.current.scrollTo({x: width * sliderState});
+
+    scrollViewRef?.current?.scrollTo({x: width * sliderState});
   };
 
   return (
@@ -98,7 +101,7 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
         horizontal
         ref={scrollViewRef}
         onScroll={onScrolHandle}
-        scrollEventThrottle={16}
+        scrollEventThrottle={20}
         showsHorizontalScrollIndicator={false}
         pagingEnabled>
         {data?.map((item, index) => {
@@ -135,18 +138,18 @@ const IntoSliderCom: FC<IntoSliderProps> = ({
         })}
       </Animated.ScrollView>
       {!!pagination ? (
-          <Pagination
-            data={data}
-            translateX={translateX}
-            cruntIndex={sliderState}
-            inactiveDotWidth={inactiveDotWidth}
-            activeDotWidth={activeDotWidth}
-            activeDotColor={activeDotColor}
-            inactiveDotColor={inactiveDotColor}
-            contentOffset={contentOffset}
+        <Pagination
+          data={data}
+          translateX={translateX}
+          cruntIndex={sliderState}
+          inactiveDotWidth={inactiveDotWidth}
+          activeDotWidth={activeDotWidth}
+          activeDotColor={activeDotColor}
+          inactiveDotColor={inactiveDotColor}
+          contentOffset={contentOffset}
           scrollElementHeightPercent={scrollElementHeightPercent}
           scrollIndecatorHeight={scrollIndecatorHeight}
-          />
+        />
       ) : null}
 
       <TouchableOpacity

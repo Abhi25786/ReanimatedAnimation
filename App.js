@@ -27,6 +27,9 @@ const App = () => {
       text: 'good',
     },
 
+   
+
+
   ]);
   return (
     <View style={{ flex: 1 }}>
