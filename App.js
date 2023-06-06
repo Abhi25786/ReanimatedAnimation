@@ -1,13 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
-import SwipeSheet from './src/Screens/SwipeSheet/SwipeSheet'
+import AmazonProduct from './src/Screens/AmazonProductList/AmazonProduct'
 
 const App = () => {
   return (
-      <SwipeSheet/>
+   <AmazonProduct/>
   )
 }
 
 export default App
-
-const styles = StyleSheet.create({})
