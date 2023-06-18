@@ -1,18 +1,14 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import RedialMenu from './src/Screens/LikeDislikeSwip/LikeDislikeSwip';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 
 const App = () => {
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <RedialMenu />
-    </GestureHandlerRootView>
-  );
-};
+    <View>
+      <Text>App</Text>
+    </View>
+  )
+}
 
-export default App;
+export default App
 
-const styles = StyleSheet.create({});
-
-
+const styles = StyleSheet.create({})
