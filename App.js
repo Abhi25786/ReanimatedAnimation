@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import AmazonProduct from './src/Screens/AmazonProductList/AmazonProduct'
+import CategoryAndSubCategory from './src/Screens/CategoryAndSubCategory/CategoryAndSubCategory'
 
 const App = () => {
   return (
-   <AmazonProduct/>
+   <CategoryAndSubCategory />
   )
 }
 
