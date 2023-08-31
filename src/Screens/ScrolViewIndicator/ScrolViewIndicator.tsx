@@ -3,8 +3,8 @@ import React, { memo, useState } from 'react'
 import Animated, { runOnJS, runOnUI, useAnimatedScrollHandler, useDerivedValue } from 'react-native-reanimated'
 const ScrolViewIndicator = () => {
   
-    const scrollElementHeightPercent = 10;
-    const Size = 100;
+    const scrollElementHeightPercent = 20;
+    const Size = 100; //<----------------- this is user for scroll width control 
     const [contentOffset, setContentOffset] = useState(0);
   
     const onScrolHandle = useAnimatedScrollHandler(event => {
@@ -22,16 +22,19 @@ const ScrolViewIndicator = () => {
     <View style={{alignItems: 'center'}}>
     <Animated.ScrollView
       horizontal
-      onScroll={onScrolHandle}
+        onScroll={onScrolHandle}
+        showsHorizontalScrollIndicator={false}
       scrollEventThrottle={16}
       contentContainerStyle={{paddingHorizontal: 5}}>
       {[...Array(10)].map((title, index) => (
         <Animated.View
           style={{
-            height: Size,
-            width: Size,
+            height: 160,
+            width: 290,
             backgroundColor: 'red',
+            borderRadius:12,
             marginHorizontal: 5,
+            marginTop:10,
           }}
           key={index.toString()}
         />
