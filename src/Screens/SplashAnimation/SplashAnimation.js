@@ -10,49 +10,52 @@ import React, {useEffect, useState} from 'react';
 import Animated, {
   Extrapolate,
   interpolate,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { moderateScale, width } from '../styles/responsiveSize';
+import colors from '../styles/colors';
 const {height} = Dimensions.get('window');
-const SplashAnimation = () => {
-  const [animationData, setAnimationData] = useState([
-    {image: require('../../../offer.png')},
-    {image: require('../../../offer.png')},
-    {image: require('../../../offer.png')},
-    {image: require('../../../offer.png')},
-    {image: require('../../../offer.png')},
-    {image: require('../../../offer.png')},
-    {image: require('../../../offer.png')},
-  ]);
+const SplashAnimation = ({animationData=[],onVideoEnd=()=>{}}) => {
+  const callbackdata = (index) => {
+    setTimeout(() => {
+      if (index == animationData?.slice(0,7).length - 1) {
+        onVideoEnd(false)
+      }
+    },index*450 );false
+}
 
   return (
-    <SafeAreaView style={{flex: 1, alignItems: 'center'}}>
+    <View style={{flex: 1,
+     alignItems: 'center' ,
+     backgroundColor:colors.orangeooryks,
+     width:width}}>
       <Animated.FlatList
-        data={animationData}
+        data={animationData?.slice(0,7)}
         scrollEnabled={false}
         keyExtractor={(item, index) => index.toString()}
         bounces={false}
         horizontal
+        
         contentContainerStyle={{alignItems: 'center'}}
-        ItemSeparatorComponent={() => <View style={{paddingRight: 10}} />}
+        ItemSeparatorComponent={() => <View style={{paddingRight: moderateScale(10)}} />}
         renderItem={({item, index}) => (
-          <AnimatedImage index={index} item={item} />
+          <AnimatedImage index={index} item={item} callbackdata={callbackdata} animationData={animationData} />
         )}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 export default SplashAnimation;
 
-export const AnimatedImage = ({item, index}) => {
+export const AnimatedImage = ({item, index,callbackdata ,animationData}) => {
   const translateY = useSharedValue(-height);
   useEffect(() => {
-    //   translateY.value = index == 3 ? withSpring(0) :
-    //       withDelay((index + 1) * 300, withTiming(0))
-          translateY.value = withDelay((index + 1) * 200, withTiming(0))
+          translateY.value = withDelay((index + 1) * 200, withSpring(0,{},runOnJS(callbackdata)(index)))
   }, []);
 
   const animatedInageStyle = useAnimatedStyle(() => {
@@ -63,10 +66,10 @@ export const AnimatedImage = ({item, index}) => {
 
   return (
     <Animated.Image
-      source={item.image}
+      source={item}
       style={[
-        {height: 40, width: 40, backgroundColor: 'red'},
-        index + (1 % 2) == 0 ? {marginRight: 10} : {marginLeft: 10},
+        {  height: animationData.length > 6 ? height/19 :height/17, width: animationData.length > 6 ? width/9 :width/7.5, resizeMode: 'contain', tintColor: 'white' },
+        index + (1 % 2) == 0 ? { marginRight: moderateScale(10) } : { marginLeft: moderateScale(10) },
         animatedInageStyle,
       ]}
     />
