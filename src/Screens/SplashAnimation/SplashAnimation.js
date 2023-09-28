@@ -17,13 +17,22 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { moderateScale, width } from '../styles/responsiveSize';
-import colors from '../styles/colors';
-const {height} = Dimensions.get('window');
-const SplashAnimation = ({animationData=[],onVideoEnd=()=>{}}) => {
+const { height, width } = Dimensions.get('window');
+const SplashAnimation = ({  onVideoEnd = () => { } }) => {
+  
+  const [animationData, setAnimationData] = useState([
+    {image: require('../../../offer.png')},
+    {image: require('../../../offer.png')},
+    {image: require('../../../offer.png')},
+    {image: require('../../../offer.png')},
+    {image: require('../../../offer.png')},
+    {image: require('../../../offer.png')},
+    {image: require('../../../offer.png')},
+  ]);
   const callbackdata = (index) => {
     setTimeout(() => {
-      if (index == animationData?.slice(0,7).length - 1) {
+      if (index == animationData?.slice(0, 7).length - 1) {
+        alert('video end')
         onVideoEnd(false)
       }
     },index*450 );false
@@ -32,7 +41,7 @@ const SplashAnimation = ({animationData=[],onVideoEnd=()=>{}}) => {
   return (
     <View style={{flex: 1,
      alignItems: 'center' ,
-     backgroundColor:colors.orangeooryks,
+     backgroundColor:'green',
      width:width}}>
       <Animated.FlatList
         data={animationData?.slice(0,7)}
@@ -42,7 +51,7 @@ const SplashAnimation = ({animationData=[],onVideoEnd=()=>{}}) => {
         horizontal
         
         contentContainerStyle={{alignItems: 'center'}}
-        ItemSeparatorComponent={() => <View style={{paddingRight: moderateScale(10)}} />}
+        ItemSeparatorComponent={() => <View style={{paddingRight: 10}} />}
         renderItem={({item, index}) => (
           <AnimatedImage index={index} item={item} callbackdata={callbackdata} animationData={animationData} />
         )}
@@ -66,10 +75,10 @@ export const AnimatedImage = ({item, index,callbackdata ,animationData}) => {
 
   return (
     <Animated.Image
-      source={item}
+    source={item.image}
       style={[
         {  height: animationData.length > 6 ? height/19 :height/17, width: animationData.length > 6 ? width/9 :width/7.5, resizeMode: 'contain', tintColor: 'white' },
-        index + (1 % 2) == 0 ? { marginRight: moderateScale(10) } : { marginLeft: moderateScale(10) },
+        index + (1 % 2) == 0 ? { marginRight: 10 } : { marginLeft: 10},
         animatedInageStyle,
       ]}
     />
